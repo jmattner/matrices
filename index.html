@@ -6,17 +6,22 @@
     <script>
       $(function(){
         var mouse = {};
-        $("input").change(function(i){
+        doMatrix = function(i){
           var value = $(i.currentTarget).val();
-          // -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+          doChanges();
+        }
+        doChanges = function() {
           var box = $("#box");
-          // box.attr('style','-webkit-transform: matrix3d(2,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1);');
           box.attr('style','-webkit-transform: matrix3d('+$("#m00").val()+','+$("#m01").val()+','+$("#m02").val()+','+$("#m03").val()+','+$("#m10").val()+','+$("#m11").val()+','+$("#m12").val()+','+$("#m13").val()+','+$("#m20").val()+','+$("#m21").val()+','+$("#m22").val()+','+$("#m23").val()+','+$("#m30").val()+','+$("#m31").val()+','+$("#m32").val()+','+$("#m33").val()+');');
-        });
+        }
+        $("input").bind('change',doMatrix);
         $(window).mousemove(function(e){
           mouse.x = e.pageX;
           mouse.y = e.pageY;
           $("#mouse").text("x:"+mouse.x+" y:"+mouse.y);
+          $("#m03").val(($(window).width()/2-mouse.x)/20000);
+          $("#m13").val(($(window).height()/2-mouse.y)/20000);
+          doChanges();
         });
       });
     </script>

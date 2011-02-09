@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>matrix</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script>
+      $(function(){
+        $("input").change(function(i){
+          var value = $(i.currentTarget).val();
+          // -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+          var box = $("#box");
+          // box.attr('style','-webkit-transform: matrix3d(2,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1);');
+          box.attr('style','-webkit-transform: matrix3d('+$("#m00").val()+','+$("#m01").val()+','+$("#m02").val()+','+$("#m03").val()+','+$("#m10").val()+','+$("#m11").val()+','+$("#m12").val()+','+$("#m13").val()+','+$("#m20").val()+','+$("#m21").val()+','+$("#m22").val()+','+$("#m23").val()+','+$("#m30").val()+','+$("#m31").val()+','+$("#m32").val()+','+$("#m33").val()+');');
+        });
+      });
+    </script>
+    <style rel="stylesheet">
+      input { width: 20px; }
+      #box { position: absolute; left: 50%; top: 50%; position: absolute; width: 100px; height: 100px; margin: -50px 0 0 -50px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input id="m00" value="1" />
+      <input id="m01" value="0" />
+      <input id="m02" value="0" />
+      <input id="m03" value="0" />
+      <br />
+      <input id="m10" value="0" />
+      <input id="m11" value="1" />
+      <input id="m12" value="0" />
+      <input id="m13" value="0" />
+      <br />
+      <input id="m20" value="0" />
+      <input id="m21" value="0" />
+      <input id="m22" value="1" />
+      <input id="m23" value="0" />
+      <br />
+      <input id="m30" value="0" />
+      <input id="m31" value="0" />
+      <input id="m32" value="0" />
+      <input id="m33" value="1" />
+    </form>
+    <div id="container">
+      <div id="box"></div>
+    </div>
+  </body>
+</html>

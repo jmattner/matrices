@@ -2,7 +2,9 @@
 <html>
   <head>
     <title>matrix</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <!--<script src="karlbright.matrices.js"></script>-->
+    <!--<script src="demo.js"></script>-->
     <script>
       $(function(){
         var mouse = {};
@@ -16,23 +18,30 @@
         }
         $("input").bind('change',doMatrix);
         $(window).mousemove(function(e){
-          mouse.x = e.pageX;
-          mouse.y = e.pageY;
-          $("#mouse").text("x:"+mouse.x+" y:"+mouse.y);
-          $("#m03").val(($(window).width()/2-mouse.x)/20000);
-          $("#m13").val(($(window).height()/2-mouse.y)/20000);
-          doChanges();
+          if($("#mouse_capturing:checked").length > 0) {
+            mouse.x = e.pageX;
+            mouse.y = e.pageY;
+            $("#mouse span").text("x:"+mouse.x+" y:"+mouse.y);
+            $("#m03").val(($(window).width()/2-mouse.x)/20000);
+            $("#m13").val(($(window).height()/2-mouse.y)/20000);
+            doChanges();
+          }
+        });
+        $(window).bind('click',function(){
+          $("#saved").text('-webkit-transform: matrix3d('+$("#m00").val()+','+$("#m01").val()+','+$("#m02").val()+','+$("#m03").val()+','+$("#m10").val()+','+$("#m11").val()+','+$("#m12").val()+','+$("#m13").val()+','+$("#m20").val()+','+$("#m21").val()+','+$("#m22").val()+','+$("#m23").val()+','+$("#m30").val()+','+$("#m31").val()+','+$("#m32").val()+','+$("#m33").val()+');');
         });
       });
     </script>
     <style rel="stylesheet">
-      input { width: 20px; }
-      #box { position: absolute; left: 50%; top: 50%; position: absolute; width: 100px; height: 100px; margin: -50px 0 0 -50px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); }
+      form input { width: 50px; height: 50px; }
+      #box { position: absolute; left: 50%; top: 50%; position: absolute; width: 100px; height: 100px; margin: -50px 0 0 -50px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; }
+      video { position: absolute; width: 178px; height: 100px; left: -39px; top: 0; }
     </style>
   </head>
   <body>
-    <div id="mouse">x:0 y:0</div>
-    <form>
+    <div id="mouse"><span>x:0 y:0</span> <input type="checkbox" checked="checked" id="mouse_capturing" /> Capture mouse movement?</div>
+    <div id="saved"></div>
+    <form id="matrix">
       <input id="m00" value="1" />
       <input id="m01" value="0" />
       <input id="m02" value="0" />
@@ -54,7 +63,7 @@
       <input id="m33" value="1" />
     </form>
     <div id="container">
-      <div id="box"></div>
+      <div id="box"><video src="swift.mp4" width="200px" height="150px" audio="muted" autoplay ></div>
     </div>
   </body>
 </html>

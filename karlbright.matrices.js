@@ -24,7 +24,7 @@
   Used to calculate matrices on boxes as user moves around the page.
   e : event object, passed through from jQuery bind method
   */
-  onMouseMove = function(e) {
+  function onMouseMove(e) {
     $.matrices.mouse.x = e.pageX;
     $.matrices.mouse.y = e.pageY;
   }
@@ -35,7 +35,7 @@
   Takes the value from the changed input and passes it to our updateMatrix method.
   e : event object, passed through from jQuery bind method
   */
-  onMatrixInputChange = function(e) {
+  function onMatrixInputChange(e) {
     var $this = $(e.currentTarget);
     var id = '#' + $this.attr('id'), value = $this.val();
     updateMatrix(id,value);
@@ -49,7 +49,7 @@
   ...OR...
   c : key/value pair for multiple values
   */
-  updateMatrix = function(c,v) {
+  function updateMatrix(c,v) {
     // Check whats being passed into the update matrix method
     // If it is an object then we are most likely changing multiple values
     if(typeof c == 'object') {
@@ -72,7 +72,7 @@
   updateBox
   Update our box with the correct transform3d styles.
   */
-  updateBox = function() {
+  function updateBox() {
     // Create empty array to store values too
     matrix = [];
     // Iterate over each input of the matrix form and save to the array

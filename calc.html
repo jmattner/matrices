@@ -16,7 +16,41 @@
         doChanges = function(box) {
           $(box).attr('style','-webkit-transform: matrix3d('+$("#m00").val()+','+$("#m01").val()+','+$("#m02").val()+','+$("#m03").val()+','+$("#m10").val()+','+$("#m11").val()+','+$("#m12").val()+','+$("#m13").val()+','+$("#m20").val()+','+$("#m21").val()+','+$("#m22").val()+','+$("#m23").val()+','+$("#m30").val()+','+$("#m31").val()+','+$("#m32").val()+','+$("#m33").val()+');');
         }
+        parseMatrix = function(el) {
+          var style = $(el).attr('style');
+          style = style.replace('-webkit-transform: matrix3d(','');
+          style = style.replace(');','');
+          var matrix = style.split(',');
+          setMatrix(matrix);
+        }
+        setMatrix = function(m) {
+          $("#m00").val(parseFloat(m[0]));
+          $("#m01").val(parseFloat(m[1]));
+          $("#m02").val(parseFloat(m[2]));
+          $("#m03").val(parseFloat(m[3]));
+          $("#m10").val(parseFloat(m[4]));
+          $("#m11").val(parseFloat(m[5]));
+          $("#m12").val(parseFloat(m[6]));
+          $("#m13").val(parseFloat(m[7]));
+          $("#m20").val(parseFloat(m[8]));
+          $("#m21").val(parseFloat(m[9]));
+          $("#m22").val(parseFloat(m[10]));
+          $("#m23").val(parseFloat(m[11]));
+          $("#m30").val(parseFloat(m[12]));
+          $("#m31").val(parseFloat(m[13]));
+          $("#m32").val(parseFloat(m[14]));
+          $("#m33").val(parseFloat(m[15]));
+        }
+        initStyles = function() {
+          $(".box").attr('style','-webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);');
+        }
+        initStyles();
         $("input").bind('change',doMatrix);
+        $(".box").bind('click',function(){
+          var num = $(this).text();
+          var m = parseMatrix(this);
+          $("#select_box").find('option').eq(parseFloat(num)-1).attr('selected','selected');
+        });
       });
     </script>
     <style rel="stylesheet">
@@ -48,13 +82,6 @@
         <option value="#box3">box 3</option>
         <option value="#box4">box 4</option>
         <option value="#box5">box 5</option>
-        <!-- <option value="#box6">box 6</option>
-        <option value="#box7">box 7</option>
-        <option value="#box8">box 8</option>
-        <option value="#box9">box 9</option>
-        <option value="#box10">box 10</option>
-        <option value="#box11">box 11</option>
-        <option value="#box12">box 12</option> -->
       </select>
       <br />
       <input id="m00" value="1" />
@@ -83,13 +110,6 @@
       <div class="box" id="box3">3</div>
       <div class="box" id="box4">4</div>
       <div class="box" id="box5">5</div>
-      <!-- <div class="box" id="box6">6</div>
-      <div class="box" id="box7">7</div>
-      <div class="box" id="box8">8</div>
-      <div class="box" id="box9">9</div>
-      <div class="box" id="box10">10</div>
-      <div class="box" id="box11">11</div>
-      <div class="box" id="box12">12</div> -->
     </div>
   </body>
 </html>

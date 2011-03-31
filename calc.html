@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <title>matrix</title>
+    <script src="jquery.min.js"></script>
+    <!--<script src="karlbright.matrices.js"></script>-->
+    <!--<script src="demo.js"></script>-->
+    <script>
+      $(function(){
+        var mouse = {};
+        doMatrix = function(i){
+          var value = $(i.currentTarget).val();
+          var box = $("#select_box").val();
+          doChanges(box);
+        }
+        doChanges = function(box) {
+          $(box).attr('style','-webkit-transform: matrix3d('+$("#m00").val()+','+$("#m01").val()+','+$("#m02").val()+','+$("#m03").val()+','+$("#m10").val()+','+$("#m11").val()+','+$("#m12").val()+','+$("#m13").val()+','+$("#m20").val()+','+$("#m21").val()+','+$("#m22").val()+','+$("#m23").val()+','+$("#m30").val()+','+$("#m31").val()+','+$("#m32").val()+','+$("#m33").val()+');');
+        }
+        $("input").bind('change',doMatrix);
+      });
+    </script>
+    <style rel="stylesheet">
+      form { z-index: 1000; }
+      form input { width: 50px; height: 50px; }
+      #container { position: absolute; top: 200px; left: 350px; }
+      .box { border: 1px solid #000; width: 98px; height: 98px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; left: 0; position: absolute; }
+      #box1 { top: 0; left: 0; background: red; }
+      #box2 { top: 0; left: 100px; background: blue; z-index: 100; }
+      #box3 { top: 0; left: 200px; background: purple; z-index: 200; }
+      #box4 { top: 0; left: 300px; background: green; z-index: 100; }
+      #box5 { top: 0; left: 400px; background: antiquewhite; }/*
+      #box6 { top: 0; left: 500px; background: orange; }
+      #box7 {  top: 100px; left: 0; background: pink; }
+      #box8 {  top: 100px; left: 100px; background: yellow; }
+      #box9 {  top: 100px; left: 200px; background: brown; }
+      #box10 { top: 100px; left: 300px; background: darkslateblue; }
+      #box11 { top: 100px; left: 400px; background: tomato; }
+      #box12 { top: 100px; left: 500px; background: yellowgreen; }*/
+      video { position: absolute; width: 178px; height: 100px; left: -39px; top: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="saved"></div>
+    <form id="matrix">
+      <select id="select_box">
+        <option value="#box1">box 1</option>
+        <option value="#box2">box 2</option>
+        <option value="#box3">box 3</option>
+        <option value="#box4">box 4</option>
+        <option value="#box5">box 5</option>
+        <!-- <option value="#box6">box 6</option>
+        <option value="#box7">box 7</option>
+        <option value="#box8">box 8</option>
+        <option value="#box9">box 9</option>
+        <option value="#box10">box 10</option>
+        <option value="#box11">box 11</option>
+        <option value="#box12">box 12</option> -->
+      </select>
+      <br />
+      <input id="m00" value="1" />
+      <input id="m01" value="0" />
+      <input id="m02" value="0" />
+      <input id="m03" value="0" />
+      <br />
+      <input id="m10" value="0" />
+      <input id="m11" value="1" />
+      <input id="m12" value="0" />
+      <input id="m13" value="0" />
+      <br />
+      <input id="m20" value="0" />
+      <input id="m21" value="0" />
+      <input id="m22" value="1" />
+      <input id="m23" value="0" />
+      <br />
+      <input id="m30" value="0" />
+      <input id="m31" value="0" />
+      <input id="m32" value="0" />
+      <input id="m33" value="1" />
+    </form>
+    <div id="container">
+      <div class="box" id="box1">1</div>
+      <div class="box" id="box2">2</div>
+      <div class="box" id="box3">3</div>
+      <div class="box" id="box4">4</div>
+      <div class="box" id="box5">5</div>
+      <!-- <div class="box" id="box6">6</div>
+      <div class="box" id="box7">7</div>
+      <div class="box" id="box8">8</div>
+      <div class="box" id="box9">9</div>
+      <div class="box" id="box10">10</div>
+      <div class="box" id="box11">11</div>
+      <div class="box" id="box12">12</div> -->
+    </div>
+  </body>
+</html>

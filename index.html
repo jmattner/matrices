@@ -3,12 +3,25 @@
     <meta charset="utf-8" />
     <title>Matrices</title>
     <script src="jquery.min.js"></script>
-    <script src="javascripts/karlbright.matrices.js"></script>
+    <script src="karlbright.brightbox.js"></script>
     <script>
       $(function(){
       });
     </script>
+    <style rel="stylesheet">
+      form input { width: 50px; height: 50px; }
+      #box1 { position: absolute; left: 25%; top: 50%; position: absolute; width: 100px; height: 100px; margin: -50px 0 0 -50px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; }
+      #box2 { position: absolute; left: 50%; top: 50%; position: absolute; width: 100px; height: 100px; margin: -50px 0 0 -50px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; }
+      #box3 { position: absolute; left: 75%; top: 50%; position: absolute; width: 100px; height: 100px; margin: -50px 0 0 -50px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; }
+      video { position: absolute; width: 178px; height: 100px; left: -39px; top: 0; }
+      video { position: absolute; width: 178px; height: 100px; left: -39px; top: 0; }
+    </style>
   </head>
   <body>
+    <div id="container">
+      <div id="box1"><video src="swift.mp4" width="200px" height="150px" audio="muted" autoplay ></div>
+      <div id="box2"><video src="swift.mp4" width="200px" height="150px" audio="muted" autoplay ></div>
+      <div id="box3"><video src="swift.mp4" width="200px" height="150px" audio="muted" autoplay ></div>
+    </div>
   </body>
 </html>

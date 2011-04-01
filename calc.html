@@ -13,24 +13,36 @@
           var y = (yCenter - mouse.yPos) / 100;
           var text = "x: " + x + " || y: " + y;
           $(box).text(text);
-          var matrix = [do1(x), 0, 0, do4(x), 0, do6(x), 0, 0, 0, 0, 1, 0, do13(x), 0, 0, 1];
+          var matrix = [do1(x, y), 0, 0, do4(x, y), 0, do6(x), 0, do8(y), 0, 0, 1, 0, do13(x), do14(y), 0, 1];
           $(box).attr('style','-webkit-transform: matrix3d(' + matrix.join(',') + ');');
         }
-        do1 = function(x) {
-          var val;
+        do1 = function(x, y) {
+          var valX;
           var abs_x = Math.abs(x)
           if( abs_x >= 1.5 ) {
-            val = 1;
+            valX = 1;
           } else if( 1.5 > abs_x && abs_x >= 1 ) {
-            val = abs_x * (2 / 3);
+            valX = abs_x * (2 / 3);
           } else if( 1 > abs_x && abs_x >= 0.5 ) {
-            val = (abs_x - 2) * (-2 / 3);
+            valX = (abs_x - 2) * (-2 / 3);
           } else if( 0.5 > abs_x && abs_x >= 0 ) {
-            val = (abs_x - 1) * -2;
+            valX = (abs_x - 1) * -2;
           }
-          return val;
+          
+          var valY;
+          var abs_x = Math.abs(x)
+          if( abs_x >= 1.5 ) {
+            valY = 1;
+          } else if( 1.5 > abs_x && abs_x >= 1 ) {
+            valY = abs_x * (2 / 3);
+          } else if( 1 > abs_x && abs_x >= 0.5 ) {
+            valY = (abs_x - 2) * (-2 / 3);
+          } else if( 0.5 > abs_x && abs_x >= 0 ) {
+            valY = (abs_x - 1) * -2;
+          }
+          return valX * valY;
         }
-        do4 = function(x) {
+        do4 = function(x, y) {
           var val;
           var abs_x = Math.abs(x);
           var sign = abs_x / x;
@@ -55,6 +67,19 @@
           }
           return val;
         }
+        do8 = function(y) {
+          var val;
+          var abs_y = Math.abs(y);
+          var sign = abs_y / y;
+          if( abs_y >= 2 ) {
+            val = 0;
+          } else if( 2 > abs_y && abs_y >= 1 ) {
+            val = sign * (abs_y - 2) * (-0.02 / 3);
+          } else if( 1 > abs_y && abs_y >= 0 ) {
+            val = y * (0.02 / 3);
+          }
+          return val;
+        }
         do13 = function(x) {
           var val;
           var abs_x = Math.abs(x);
@@ -72,13 +97,35 @@
           }
           return val;
         }
+        do14 = function(y) {
+          var val;
+          var abs_y = Math.abs(y);
+          var sign = abs_y / y;
+          if( abs_y >= 2 ) {
+            val = 0;
+          } else if( 2 > abs_y && abs_y >= 1.5 ) {
+            val = sign * (abs_y - 2) * -16;
+          } else if( 1.5 > abs_y && abs_y >= 1 ) {
+            val = sign * (((-152 * (abs_y - 1.5)) / 3) + 8);
+          } else if( 1 > abs_y && abs_y >= 0.5 ) {
+            val = sign * ((abs_y * 152) - 52) / 3;
+          } else if( 0.5 > abs_y && abs_y >= 0 ) {
+            val = y * 16;
+          }
+          return val;
+        }
         $(window).mousemove(function(e){
           mouse.xPos = e.pageX;
           mouse.yPos = e.pageY;
-          updateBox("#anim1", 450, 200);
-          updateBox("#anim2", 550, 200);
-          updateBox("#anim3", 650, 200);
-          updateBox("#anim4", 750, 200);
+          updateBox("#anim1", 450, 100);
+          updateBox("#anim2", 550, 100);
+          updateBox("#anim3", 650, 100);
+          updateBox("#anim4", 450, 200);
+          updateBox("#anim5", 550, 200);
+          updateBox("#anim6", 650, 200);
+          updateBox("#anim7", 450, 300);
+          updateBox("#anim8", 550, 300);
+          updateBox("#anim9", 650, 300);
         });
         initStyles = function() {
           $(".box").attr('style','-webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);');
@@ -97,10 +144,15 @@
       form input { width: 50px; height: 50px; }
       #container { position: absolute; top: 200px; left: 350px; }
       .box { border: 1px solid #000; width: 98px; height: 98px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; left: 0; position: absolute; }
-      #anim1 { top: 150px; left: 400px; background: orange; z-index: 100; }
-      #anim2 { top: 150px; left: 500px; background: blue; z-index: 100; }
-      #anim3 { top: 150px; left: 600px; background: red; z-index: 100; }
-      #anim4 { top: 150px; left: 700px; background: green; z-index: 100; }
+      #anim1 { top: 50px; left: 400px; background: orange; z-index: 100; }
+      #anim2 { top: 50px; left: 500px; background: blue; z-index: 100; }
+      #anim3 { top: 50px; left: 600px; background: red; z-index: 100; }
+      #anim4 { top: 150px; left: 400px; background: green; z-index: 100; }
+      #anim5 { top: 150px; left: 500px; background: white; z-index: 100; }
+      #anim6 { top: 150px; left: 600px; background: maroon; z-index: 100; }
+      #anim7 { top: 250px; left: 400px; background: black; z-index: 100; }
+      #anim8 { top: 250px; left: 500px; background: yellow; z-index: 100; }
+      #anim9 { top: 250px; left: 600px; background: purple; z-index: 100; }
       video { position: absolute; width: 178px; height: 100px; left: -39px; top: 0; }
     </style>
   </head>
@@ -109,5 +161,10 @@
     <div class="box" id="anim2"></div>
     <div class="box" id="anim3"></div>
     <div class="box" id="anim4"></div>
+    <div class="box" id="anim5"></div>
+    <div class="box" id="anim6"></div>
+    <div class="box" id="anim7"></div>
+    <div class="box" id="anim8"></div>
+    <div class="box" id="anim9"></div>
   </body>
 </html>

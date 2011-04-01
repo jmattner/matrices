@@ -8,22 +8,13 @@
     <script>
       $(function(){
         var mouse = {};
-        doMatrix = function(i){
-          var value = $(i.currentTarget).val();
-          var box = $("#select_box").val();
-          doChanges(box);
-        }
-        doChanges = function(box) {
-          $(box).attr('style','-webkit-transform: matrix3d('+$("#m00").val()+','+$("#m01").val()+','+$("#m02").val()+','+$("#m03").val()+','+$("#m10").val()+','+$("#m11").val()+','+$("#m12").val()+','+$("#m13").val()+','+$("#m20").val()+','+$("#m21").val()+','+$("#m22").val()+','+$("#m23").val()+','+$("#m30").val()+','+$("#m31").val()+','+$("#m32").val()+','+$("#m33").val()+');');
-        }
-        updateBox = function() {
-          var x = (450 - mouse.xPos) / 100;
-          var y = (100 - mouse.yPos) / 100;
+        updateBox = function(box, xCenter, yCenter) {
+          var x = (xCenter - mouse.xPos) / 100;
+          var y = (yCenter - mouse.yPos) / 100;
           var text = "x: " + x + " || y: " + y;
-          $("#box_main").text(text);
+          $(box).text(text);
           var matrix = [do1(x), 0, 0, do4(x), 0, do6(x), 0, 0, 0, 0, 1, 0, do13(x), 0, 0, 1];
-          console.log(matrix.join(','));
-          $("#box_main").attr('style','-webkit-transform: matrix3d(' + matrix.join(',') + ');');
+          $(box).attr('style','-webkit-transform: matrix3d(' + matrix.join(',') + ');');
         }
         do1 = function(x) {
           var val;
@@ -81,35 +72,13 @@
           }
           return val;
         }
-        parseMatrix = function(el) {
-          var style = $(el).attr('style');
-          style = style.replace('-webkit-transform: matrix3d(','');
-          style = style.replace(');','');
-          var matrix = style.split(',');
-          setMatrix(matrix);
-        }
-        setMatrix = function(m) {
-          $("#m00").val(parseFloat(m[0]));
-          $("#m01").val(parseFloat(m[1]));
-          $("#m02").val(parseFloat(m[2]));
-          $("#m03").val(parseFloat(m[3]));
-          $("#m10").val(parseFloat(m[4]));
-          $("#m11").val(parseFloat(m[5]));
-          $("#m12").val(parseFloat(m[6]));
-          $("#m13").val(parseFloat(m[7]));
-          $("#m20").val(parseFloat(m[8]));
-          $("#m21").val(parseFloat(m[9]));
-          $("#m22").val(parseFloat(m[10]));
-          $("#m23").val(parseFloat(m[11]));
-          $("#m30").val(parseFloat(m[12]));
-          $("#m31").val(parseFloat(m[13]));
-          $("#m32").val(parseFloat(m[14]));
-          $("#m33").val(parseFloat(m[15]));
-        }
         $(window).mousemove(function(e){
           mouse.xPos = e.pageX;
           mouse.yPos = e.pageY;
-          updateBox();
+          updateBox("#anim1", 450, 200);
+          updateBox("#anim2", 550, 200);
+          updateBox("#anim3", 650, 200);
+          updateBox("#anim4", 750, 200);
         });
         initStyles = function() {
           $(".box").attr('style','-webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);');
@@ -128,60 +97,17 @@
       form input { width: 50px; height: 50px; }
       #container { position: absolute; top: 200px; left: 350px; }
       .box { border: 1px solid #000; width: 98px; height: 98px; background: red; -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1); overflow: hidden; left: 0; position: absolute; }
-      #box1 { top: 0; left: 0; background: red; }
-      #box2 { top: 0; left: 100px; background: blue; z-index: 100; }
-      #box3 { top: 0; left: 200px; background: purple; z-index: 200; }
-      #box4 { top: 0; left: 300px; background: green; z-index: 100; }
-      #box5 { top: 0; left: 400px; background: antiquewhite; }/*
-      #box6 { top: 0; left: 500px; background: orange; }
-      #box7 {  top: 100px; left: 0; background: pink; }
-      #box8 {  top: 100px; left: 100px; background: yellow; }
-      #box9 {  top: 100px; left: 200px; background: brown; }
-      #box10 { top: 100px; left: 300px; background: darkslateblue; }
-      #box11 { top: 100px; left: 400px; background: tomato; }
-      #box12 { top: 100px; left: 500px; background: yellowgreen; }*/
-      #box_main { top: 50px; left: 400px; background: orange; z-index: 100; }
+      #anim1 { top: 150px; left: 400px; background: orange; z-index: 100; }
+      #anim2 { top: 150px; left: 500px; background: blue; z-index: 100; }
+      #anim3 { top: 150px; left: 600px; background: red; z-index: 100; }
+      #anim4 { top: 150px; left: 700px; background: green; z-index: 100; }
       video { position: absolute; width: 178px; height: 100px; left: -39px; top: 0; }
     </style>
   </head>
   <body>
-    <div id="saved"></div>
-    <form id="matrix">
-      <select id="select_box">
-        <option value="#box1">box 1</option>
-        <option value="#box2">box 2</option>
-        <option value="#box3">box 3</option>
-        <option value="#box4">box 4</option>
-        <option value="#box5">box 5</option>
-      </select>
-      <br />
-      <input id="m00" value="1" />
-      <input id="m01" value="0" />
-      <input id="m02" value="0" />
-      <input id="m03" value="0" />
-      <br />
-      <input id="m10" value="0" />
-      <input id="m11" value="1" />
-      <input id="m12" value="0" />
-      <input id="m13" value="0" />
-      <br />
-      <input id="m20" value="0" />
-      <input id="m21" value="0" />
-      <input id="m22" value="1" />
-      <input id="m23" value="0" />
-      <br />
-      <input id="m30" value="0" />
-      <input id="m31" value="0" />
-      <input id="m32" value="0" />
-      <input id="m33" value="1" />
-    </form>
-    <div id="container">
-      <div class="box" id="box1">1</div>
-      <div class="box" id="box2">2</div>
-      <div class="box" id="box3">3</div>
-      <div class="box" id="box4">4</div>
-      <div class="box" id="box5">5</div>
-    </div>
-    <div class="box" id="box_main">boxu des</div>
+    <div class="box" id="anim1"></div>
+    <div class="box" id="anim2"></div>
+    <div class="box" id="anim3"></div>
+    <div class="box" id="anim4"></div>
   </body>
 </html>
